@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fitsSystemWindows="true" >
+    <android.support.v7.widget.Toolbar
+        android:layout_height="50dp"
+        android:id="@+id/tb_forget2"
+        android:layout_width="match_parent"
+        android:background="@null">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="忘记密码"
+            android:textColor="#000"
+            android:textSize="18sp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="65dp"/>
+    </android.support.v7.widget.Toolbar>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:layout_below="@+id/tb_forget2"
+        android:background="@drawable/toolbar">
+    </View>
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="6dp"
+        android:gravity="center">
+        <RelativeLayout
+            android:id="@+id/rl_forget_code"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="85dp"
+            android:gravity="center">
+
+            <EditText
+                android:id="@+id/et_code"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="110dp"
+                android:paddingBottom="13dp"
+                android:paddingTop="13dp"
+                android:drawablePadding="8dp"
+                android:theme="@style/MyEditText"
+                android:drawableLeft="@drawable/password"
+                android:hint="验证码"
+                android:singleLine="true"
+                android:textColor="#5000"
+                android:textSize="15sp" />
+
+            <com.example.yang.iShare.CountDownTimerButton
+                android:id="@+id/btn_code"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/et_code"
+                android:layout_alignBottom="@+id/et_code"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginEnd="25dp"
+                android:layout_marginRight="25dp"
+                android:background="@null"
+                android:text="获取验证码"
+                android:textColor="#8000"
+                android:textSize="15sp" />
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/rl_new"
+            android:layout_below="@+id/rl_forget_code"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center">
+
+            <EditText
+                android:id="@+id/et_newcode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:paddingBottom="13dp"
+                android:paddingTop="13dp"
+                android:inputType="textPassword"
+                android:drawablePadding="8dp"
+                android:theme="@style/MyEditText"
+                android:drawableLeft="@drawable/password"
+                android:hint="新密码"
+                android:singleLine="true"
+                android:textColor="#5000"
+                android:textSize="15sp" />
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/rl_confirm"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/rl_new"
+            android:gravity="center">
+
+            <EditText
+                android:id="@+id/et_confirm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:paddingBottom="13dp"
+                android:paddingTop="13dp"
+                android:inputType="textPassword"
+                android:drawablePadding="8dp"
+                android:theme="@style/MyEditText"
+                android:drawableLeft="@drawable/password"
+                android:hint="确认密码"
+                android:singleLine="true"
+                android:textColor="#5000"
+                android:textSize="15sp" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <ImageButton
+        android:id="@+id/ib_forget2_back"
+        android:layout_width="33dp"
+        android:layout_height="22dp"
+        android:scaleType="centerInside"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="6dp"
+        android:background="@null"
+        android:src="@drawable/back" />
+    <ImageButton
+        android:id="@+id/ib_forget2_go"
+        android:layout_width="33dp"
+        android:layout_height="22dp"
+        android:tint="#1296db"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="15dp"
+        android:background="@null"
+        android:src="@drawable/finish1" />
+</RelativeLayout>

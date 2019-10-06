@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+    <android.support.v7.widget.CardView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/me_head"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"/>
+
+            <TextView
+                android:id="@+id/me_username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_toRightOf="@id/me_head"
+                android:text="全名"
+                android:singleLine="true"
+                android:textSize="13sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_about_follow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/me_username"
+                android:layout_toRightOf="@+id/me_head"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="80dp"
+                android:layout_marginTop="2dp"
+                android:singleLine="true"
+                android:layout_marginBottom="5dp"
+                android:text="开始关注你了哦"
+                android:textSize="13sp" />
+            <Button
+                android:id="@+id/btn_follow"
+                android:layout_width="60dp"
+                android:layout_height="28dp"
+                android:text="关注"
+                style="?android:attr/borderlessButtonStyle"
+                android:textColor="#fff"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/buttonshape3" />
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+</LinearLayout>

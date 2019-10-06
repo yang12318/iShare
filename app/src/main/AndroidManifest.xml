@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.example.yang.iShare">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <application
+        android:name="com.example.yang.iShare.MainApplication"
+        android:allowBackup="true"
+        android:icon="@drawable/chat"
+        android:label="iShare"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        tools:replace="android:label">
+        <activity
+            android:name="com.example.yang.iShare.MainActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity android:name="com.example.yang.iShare.SplashActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.example.yang.iShare.RegisterActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.example.yang.iShare.Register2Activity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.example.yang.iShare.ForgetActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.example.yang.iShare.Forget2Activity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.example.yang.iShare.ChangeCodeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.example.yang.iShare.ReviseActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.example.yang.iShare.ConcernActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.example.yang.iShare.FollowActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.example.yang.iShare.UserActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.example.yang.iShare.CommentActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.example.yang.iShare.LikeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.example.yang.iShare.DetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.example.yang.iShare.CollectActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.example.yang.iShare.LoginActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name="com.example.yang.iShare.ChatClientActivity"></activity>
+    </application>
+
+</manifest>

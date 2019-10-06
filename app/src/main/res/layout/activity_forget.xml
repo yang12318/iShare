@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fitsSystemWindows="true" >
+    <android.support.v7.widget.Toolbar
+        android:layout_height="50dp"
+        android:id="@+id/tb_forget"
+        android:layout_width="match_parent"
+        android:background="@null">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="忘记密码"
+            android:textColor="#000"
+            android:textSize="18sp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="65dp"/>
+    </android.support.v7.widget.Toolbar>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:layout_below="@+id/tb_forget"
+        android:background="@drawable/toolbar">
+    </View>
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="80dp"
+        android:gravity="center">
+
+            <EditText
+                android:id="@+id/et_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:paddingBottom="13dp"
+                android:paddingTop="13dp"
+                android:hint="邮箱"
+                android:drawablePadding="8dp"
+                android:theme="@style/MyEditText"
+                android:drawableLeft="@drawable/email"
+                android:singleLine="true"
+                android:textColor="#000"
+                android:textSize="15sp" />
+
+    </RelativeLayout>
+
+    <ImageButton
+        android:id="@+id/ib_forget_back"
+        android:layout_width="33dp"
+        android:layout_height="22dp"
+        android:layout_marginTop="15dp"
+        android:scaleType="centerInside"
+        android:layout_marginLeft="6dp"
+        android:background="#00000000"
+        android:src="@drawable/back" />
+    <ImageButton
+        android:id="@+id/ib_forget_go"
+        android:layout_width="33dp"
+        android:layout_height="22dp"
+        android:scaleType="centerInside"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="15dp"
+        android:background="#00000000"
+        android:src="@drawable/go1" />
+</RelativeLayout>

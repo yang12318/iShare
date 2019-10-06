@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/it_revise"
+        android:title="编辑个人主页"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/it_change"
+        android:title="更改密码"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/it_exit"
+        android:title="退出登录"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/it_chat"
+        android:title="群聊"
+        app:showAsAction="never"
+        />
+</menu>

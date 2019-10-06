@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/tb_like"
+        android:layout_height="50dp"
+        android:layout_width="match_parent"
+        android:background="@null">
+        <ImageButton
+            android:id="@+id/ib_like_back"
+            android:layout_width="33dp"
+            android:layout_height="22dp"
+            android:scaleType="centerInside"
+            android:background="#00000000"
+            android:layout_marginTop="15dp"
+            android:src="@drawable/back" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="赞"
+            android:textColor="#000"
+            android:textSize="18sp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="10dp"/>
+    </android.support.v7.widget.Toolbar>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:layout_below="@+id/tb_like"
+        android:background="@drawable/toolbar">
+    </View>
+    <com.ajguan.library.EasyRefreshLayout
+        android:id="@+id/el_like"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_like"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingRight="8dp"
+            android:paddingLeft="8dp"
+            android:fadingEdge="none">
+        </android.support.v7.widget.RecyclerView>
+    </com.ajguan.library.EasyRefreshLayout>
+</LinearLayout>

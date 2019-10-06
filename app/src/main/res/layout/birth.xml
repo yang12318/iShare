@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:orientation="horizontal"
+    android:paddingTop="10dp" >
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="5dip" >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="选择生日" />
+        <DatePicker
+            android:id="@+id/datePicker"
+            android:headerBackground="@color/gray"
+            android:dayOfWeekBackground="@color/gray"
+            android:dayOfWeekTextAppearance="@color/gray"
+            android:yearListSelectorColor="@color/gray"
+            android:datePickerMode="calendar"
+            android:headerDayOfMonthTextAppearance="@color/gray"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:calendarViewShown="false"
+            tools:ignore="UnusedAttribute" />
+    </LinearLayout>
+</LinearLayout>
