@@ -171,6 +171,15 @@
                 android:textSize="16sp"
                 android:textStyle="bold" />
             <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_identify"
+                    android:textSize="16sp"
+                    android:text="身份认证"
+                    android:singleLine="true"
+                    android:textColor="#1bb5eb"
+                    android:textStyle="bold"/>
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/tv_bio"

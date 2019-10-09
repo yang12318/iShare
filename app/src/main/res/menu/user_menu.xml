@@ -10,12 +10,17 @@
         android:title="更改密码"
         app:showAsAction="never" />
     <item
+            android:id="@+id/it_identity"
+            android:title="身份认证"
+            app:showAsAction="never"
+            />
+    <item
+            android:id="@+id/it_chat"
+            android:title="群聊"
+            app:showAsAction="never"
+            />
+    <item
         android:id="@+id/it_exit"
         android:title="退出登录"
         app:showAsAction="never" />
-    <item
-        android:id="@+id/it_chat"
-        android:title="群聊"
-        app:showAsAction="never"
-        />
 </menu>

@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
     <android.support.v7.widget.Toolbar
         android:layout_height="50dp"
@@ -20,19 +21,32 @@
         android:layout_below="@+id/tb_home"
         android:background="@drawable/toolbar">
     </View>
-    <com.ajguan.library.EasyRefreshLayout
-        android:id="@+id/easylayout"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        >
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_home"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingRight="8dp"
-            android:paddingLeft="8dp"
-            android:fadingEdge="none">
-        </android.support.v7.widget.RecyclerView>
-    </com.ajguan.library.EasyRefreshLayout>
+<android.support.design.widget.TabLayout
+                android:id="@+id/tabhome"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                app:tabSelectedTextColor="#000"
+                app:tabTextColor="#939292"
+                app:tabTextAppearance="@style/TabLayoutTextStyle"
+                app:tabIndicatorColor="#000"
+                app:tabBackground="@null"
+                app:tabIndicatorHeight="1dp"
+                app:tabGravity="fill"/>
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:background="@drawable/toolbar">
+        </View>
+        <LinearLayout
+                android:id="@+id/ll_tbhome"
+                android:layout_width="wrap_content"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+        </LinearLayout>
+        <android.support.v4.view.ViewPager
+                android:id="@+id/home_pager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+        </android.support.v4.view.ViewPager>
 </LinearLayout>

@@ -126,7 +126,8 @@ public class SearchFragment extends Fragment {
     }
 
     private void initView() {
-        recyclerView = (RecyclerView) view.findViewById(R.id.rv_search);
+        ///这里需要将一个fragment拆分为二，故不在原xml中添加recyclerview
+        /*recyclerView = (RecyclerView) view.findViewById(R.id.rv_search);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         easyRefreshLayout = (EasyRefreshLayout) view.findViewById(R.id.easylayout);
         easyRefreshLayout.setEnablePullToRefresh(false);
@@ -201,7 +202,7 @@ public class SearchFragment extends Fragment {
             public void onRefreshing() {
                 //easyRefreshLayout.refreshComplete();
             }
-        });
+        });*/
     }
 
     private void initData(String s) {
