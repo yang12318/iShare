@@ -1,14 +1,18 @@
 package com.example.yang.iShare;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.annotation.SuppressLint;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,6 +20,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewTreeObserver;
+import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -32,6 +38,7 @@ import com.example.yang.iShare.bean.Review;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Comment;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -59,11 +66,15 @@ public class CommentActivity extends AppCompatActivity {
         setContentView(R.layout.activity_comment);
         Intent intent  = getIntent();
         postid = intent.getIntExtra("post_id", 0);
-        MainApplication application = MainApplication.getInstance();
-        Map<String, Integer> mapParam = application.mInfoMap;
-        for(Map.Entry<String, Integer> item_map:mapParam.entrySet()) {
-            if(item_map.getKey().equals("id"))
-                myId = item_map.getValue();
+        SharedPreferences mShared;
+        mShared = MainApplication.getContext().getSharedPreferences("share", MODE_PRIVATE);
+        Map<String, Object> mapParam = (Map<String, Object>) mShared.getAll();
+        for (Map.Entry<String, Object> item_map : mapParam.entrySet()) {
+            String key = item_map.getKey();
+            Object value = item_map.getValue();
+            if(key.equals("id")) {
+                myId = Integer.valueOf(value.toString());
+            }
         }
         if(myId == -10) {
             Toast.makeText(CommentActivity.this, "全局内存中保存的信息为空", Toast.LENGTH_SHORT).show();

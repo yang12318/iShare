@@ -1,7 +1,9 @@
 package com.example.yang.iShare;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Handler;
@@ -9,11 +11,14 @@ import android.os.Looper;
 import android.os.Message;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -35,6 +40,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import okhttp3.Call;
 import okhttp3.Response;
@@ -51,11 +57,14 @@ public class FollowActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_follow);
-        MainApplication app = MainApplication.getInstance();
-        Map<String, Integer> mapParam = app.mInfoMap;
-        for(Map.Entry<String, Integer> item_map:mapParam.entrySet()) {
-            if(item_map.getKey().equals("id")) {
-                myId = item_map.getValue();
+        SharedPreferences mShared;
+        mShared = MainApplication.getContext().getSharedPreferences("share", MODE_PRIVATE);
+        Map<String, Object> mapParam = (Map<String, Object>) mShared.getAll();
+        for (Map.Entry<String, Object> item_map : mapParam.entrySet()) {
+            String key = item_map.getKey();
+            Object value = item_map.getValue();
+            if(key.equals("id")) {
+                myId = Integer.valueOf(value.toString());
             }
         }
         if(myId == -10) {
@@ -268,11 +277,14 @@ public class FollowActivity extends AppCompatActivity {
                 else if(view.getId() == R.id.follow_head || view.getId() == R.id.follow_nickname || view.getId() == R.id.follow_username) {
                     int myId = -9;
                     int userId = list.get(position).getId();
-                    MainApplication app = MainApplication.getInstance();
-                    Map<String, Integer> mapParam = app.mInfoMap;
-                    for(Map.Entry<String, Integer> item_map:mapParam.entrySet()) {
-                        if(item_map.getKey().equals("id")) {
-                            myId = item_map.getValue();
+                    SharedPreferences mShared;
+                    mShared = MainApplication.getContext().getSharedPreferences("share", MODE_PRIVATE);
+                    Map<String, Object> mapParam = (Map<String, Object>) mShared.getAll();
+                    for (Map.Entry<String, Object> item_map : mapParam.entrySet()) {
+                        String key = item_map.getKey();
+                        Object value = item_map.getValue();
+                        if(key.equals("id")) {
+                            myId = Integer.valueOf(value.toString());
                         }
                     }
                     if(myId == -9) {

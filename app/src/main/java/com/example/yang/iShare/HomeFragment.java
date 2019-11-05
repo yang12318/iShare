@@ -7,6 +7,7 @@ import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Environment;
@@ -26,6 +27,7 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
+import android.text.style.StyleSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -62,6 +64,8 @@ import okhttp3.Response;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
+import static android.content.Context.MODE_PRIVATE;
+
 public class HomeFragment extends Fragment implements EasyPermissions.PermissionCallbacks, BGANinePhotoLayout.Delegate{
 
     private int last_post_id = 0;
@@ -97,11 +101,14 @@ public class HomeFragment extends Fragment implements EasyPermissions.Permission
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_home, container, false);
-        MainApplication app = MainApplication.getInstance();
-        Map<String, Integer> mapParam = app.mInfoMap;
-        for(Map.Entry<String, Integer> item_map:mapParam.entrySet()) {
-            if(item_map.getKey().equals("id")) {
-                myId = item_map.getValue();
+        SharedPreferences mShared;
+        mShared = MainApplication.getContext().getSharedPreferences("share", MODE_PRIVATE);
+        Map<String, Object> mapParam = (Map<String, Object>) mShared.getAll();
+        for (Map.Entry<String, Object> item_map : mapParam.entrySet()) {
+            String key = item_map.getKey();
+            Object value = item_map.getValue();
+            if(key.equals("id")) {
+                myId = Integer.valueOf(value.toString());
             }
         }
         if(myId == -10) {
@@ -119,8 +126,8 @@ public class HomeFragment extends Fragment implements EasyPermissions.Permission
     }
 
     private void initView() {
-        recyclerView = (RecyclerView) view.findViewById(R.id.rv_home);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        //recyclerView = (RecyclerView) view.findViewById(R.id.rv_home);
+        //recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         easyRefreshLayout = (EasyRefreshLayout) view.findViewById(R.id.easylayout);
         easyRefreshLayout.addEasyEvent(new EasyRefreshLayout.EasyEvent() {
             @Override

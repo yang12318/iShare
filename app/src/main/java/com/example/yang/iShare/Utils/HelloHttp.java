@@ -15,10 +15,6 @@ import okhttp3.RequestBody;
 
 import static android.content.Context.MODE_PRIVATE;
 
-/**
- * Created by youxihouzainali on 2018/5/14.
- */
-
 public class HelloHttp {
     public HelloHttp() {
 
@@ -42,12 +38,12 @@ public class HelloHttp {
     }
 
     public static String dealAddress(String adress) {
-        String AppID = "nksy_YvyO2k8dLhaJ3g30";
-        String AppKey = "07ZoCkkMBR40$m+0weghiXMo6b+naTQkn3U02Ee4833jd6E1VESnlynk=";
+        String AppID = "3309_7liLTsOOWPbEioqY";
+        String AppKey = "C5hunqgHUgYo$b6a77dmEls9U3gz5by5aTvHNco+YBKtrQXE8plHI2v4=";
         String timeStamp = DateUtil.getTimeStamp();
         String sign = timeStamp + AppKey;
         sign = MD5Util.encode(sign);
-        String url = "http://ktchen.cn/" + adress + "/?timestamp=" + timeStamp + "&appid=" + AppID + "&sign=" + sign;
+        String url = "http://ins.itstudio.club/" + adress + "/?timestamp=" + timeStamp + "&appid=" + AppID + "&sign=" + sign;
         Log.d("HelloHttp", "new url = " + url);
         return url;
     }

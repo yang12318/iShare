@@ -6,9 +6,12 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.media.Image;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -20,8 +23,10 @@ import android.support.annotation.RequiresApi;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
 import android.text.Spanned;
+import android.text.TextPaint;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.util.Log;
@@ -97,11 +102,14 @@ public class DetailActivity extends AppCompatActivity implements EasyPermissions
         tv_time = (TextView) findViewById(R.id.tv_time);
         tv_like = (TextSwitcher) findViewById(R.id.tv_like);
         ninePhotoLayout = (BGANinePhotoLayout) findViewById(R.id.npl_item_moment_photos);
-        MainApplication app = MainApplication.getInstance();
-        Map<String, Integer> mapParam = app.mInfoMap;
-        for(Map.Entry<String, Integer> item_map:mapParam.entrySet()) {
-            if(item_map.getKey().equals("id")) {
-                myId = item_map.getValue();
+        SharedPreferences mShared;
+        mShared = MainApplication.getContext().getSharedPreferences("share", MODE_PRIVATE);
+        Map<String, Object> mapParam = (Map<String, Object>) mShared.getAll();
+        for (Map.Entry<String, Object> item_map : mapParam.entrySet()) {
+            String key = item_map.getKey();
+            Object value = item_map.getValue();
+            if(key.equals("id")) {
+                myId = Integer.valueOf(value.toString());
             }
         }
         if(myId == -9) {

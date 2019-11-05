@@ -3,6 +3,8 @@ package com.example.yang.iShare;
 import android.content.Context;
 import android.util.AttributeSet;
 
+import com.example.yang.iShare.HitBlockView;
+
 /**
  * Created by Hitomis on 2016/3/10.
  * email:196425254@qq.com

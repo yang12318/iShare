@@ -2,6 +2,7 @@ package com.example.yang.iShare;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -24,6 +25,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.DatePicker;
 import android.widget.Toast;
@@ -33,11 +36,18 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.yang.iShare.Utils.HelloHttp;
 import com.lljjcoder.style.citypickerview.CityPickerView;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -55,6 +65,8 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
+import okhttp3.FormBody;
+import okhttp3.Headers;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
@@ -66,6 +78,12 @@ import com.lljjcoder.bean.CityBean;
 import com.lljjcoder.bean.DistrictBean;
 import com.lljjcoder.bean.ProvinceBean;
 import com.lljjcoder.citywheel.CityConfig;
+import com.lljjcoder.style.citylist.CityListSelectActivity;
+import com.lljjcoder.style.citylist.bean.CityInfoBean;
+import com.lljjcoder.style.citylist.utils.CityListLoader;
+import com.lljjcoder.style.citypickerview.CityPickerView;
+
+import com.bumptech.glide.Glide;
 /*
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -149,11 +167,14 @@ public class ReviseActivity extends AppCompatActivity implements View.OnClickLis
         Drawable db_location=getResources().getDrawable(R.drawable.location);
         db_location.setBounds(0,0,75,75);
         tv_location.setCompoundDrawables(db_location,null,null,null);
-        MainApplication app = MainApplication.getInstance();
-        Map<String, Integer> mapParam = app.mInfoMap;
-        for(Map.Entry<String, Integer> item_map:mapParam.entrySet()) {
-            if(item_map.getKey() == "id") {
-                UserId = item_map.getValue();
+        SharedPreferences mShared;
+        mShared = MainApplication.getContext().getSharedPreferences("share", MODE_PRIVATE);
+        Map<String, Object> mapParam = (Map<String, Object>) mShared.getAll();
+        for (Map.Entry<String, Object> item_map : mapParam.entrySet()) {
+            String key = item_map.getKey();
+            Object value = item_map.getValue();
+            if(key.equals("id")) {
+                UserId = Integer.valueOf(value.toString());
             }
         }
         if(UserId == 0) {

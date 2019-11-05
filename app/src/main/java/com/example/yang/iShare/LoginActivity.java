@@ -162,8 +162,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                     editor.putString("Date", DateUtil.getNowDateTime("yyyyMMddHHmmss"));
                                     editor.putInt("id", id);
                                     editor.commit();
-                                    MainApplication application = MainApplication.getInstance();
-                                    application.mInfoMap.put("id", id);
                                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                     startActivity(intent);
                                     Looper.loop();

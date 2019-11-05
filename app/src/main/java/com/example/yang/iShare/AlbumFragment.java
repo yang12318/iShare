@@ -1,6 +1,7 @@
 package com.example.yang.iShare;
 
 import android.annotation.SuppressLint;
+import android.content.SharedPreferences;
 import android.support.v4.app.Fragment;
 import android.content.Intent;
 import android.os.Build;
@@ -15,6 +16,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -34,6 +38,8 @@ import java.util.Map;
 
 import okhttp3.Call;
 import okhttp3.Response;
+
+import static android.content.Context.MODE_PRIVATE;
 
 
 public class AlbumFragment extends Fragment{
@@ -61,11 +67,14 @@ public class AlbumFragment extends Fragment{
             Userid = bundle.getInt("id");
         }
         if (Userid == -1) {
-            MainApplication app = MainApplication.getInstance();
-            Map<String, Integer> mapParam = app.mInfoMap;
-            for(Map.Entry<String, Integer> item_map:mapParam.entrySet()) {
-                if(item_map.getKey().equals("id")) {
-                    Userid = item_map.getValue();
+            SharedPreferences mShared;
+            mShared = MainApplication.getContext().getSharedPreferences("share", MODE_PRIVATE);
+            Map<String, Object> mapParam = (Map<String, Object>) mShared.getAll();
+            for (Map.Entry<String, Object> item_map : mapParam.entrySet()) {
+                String key = item_map.getKey();
+                Object value = item_map.getValue();
+                if(key.equals("id")) {
+                    Userid = Integer.valueOf(value.toString());
                 }
             }
         }

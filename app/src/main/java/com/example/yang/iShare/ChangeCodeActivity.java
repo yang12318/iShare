@@ -1,6 +1,8 @@
 package com.example.yang.iShare;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
@@ -9,17 +11,22 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
+import android.view.View.OnFocusChangeListener;
 
 import com.example.yang.iShare.Utils.HelloHttp;
 import com.example.yang.iShare.Utils.MD5Util;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 

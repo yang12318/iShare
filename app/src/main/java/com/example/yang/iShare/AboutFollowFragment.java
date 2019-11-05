@@ -1,6 +1,7 @@
 package com.example.yang.iShare;
 
 import android.annotation.SuppressLint;
+import android.content.SharedPreferences;
 import android.support.v4.app.Fragment;
 import android.content.Intent;
 import android.os.Build;
@@ -37,6 +38,8 @@ import java.util.Map;
 import okhttp3.Call;
 import okhttp3.Response;
 
+import static android.content.Context.MODE_PRIVATE;
+
 
 public class AboutFollowFragment extends Fragment{
     private List<Info1> mInfoList;
@@ -45,13 +48,14 @@ public class AboutFollowFragment extends Fragment{
     private View view;
     private Info1Adapter adapter;
     private String mtd_id;
-public static AboutFollowFragment newInstance(String mtd_id) {
-    AboutFollowFragment f = new AboutFollowFragment();
-    Bundle b = new Bundle();
-    b.putString("id", mtd_id);
-    f.setArguments(b);
-    return f;
-}
+
+    public static AboutFollowFragment newInstance(String mtd_id) {
+        AboutFollowFragment f = new AboutFollowFragment();
+        Bundle b = new Bundle();
+        b.putString("id", mtd_id);
+        f.setArguments(b);
+        return f;
+    }
 
     public AboutFollowFragment() {
 
@@ -174,11 +178,14 @@ public static AboutFollowFragment newInstance(String mtd_id) {
                 if (view.getId() == R.id.about_follow_username || view.getId() == R.id.about_follow_head) {
                     int myId = -9;
                     int userId = mInfoList.get(position).getUserId();
-                    MainApplication app = MainApplication.getInstance();
-                    Map<String, Integer> mapParam = app.mInfoMap;
-                    for(Map.Entry<String, Integer> item_map:mapParam.entrySet()) {
-                        if(item_map.getKey().equals("id")) {
-                            myId = item_map.getValue();
+                    SharedPreferences mShared;
+                    mShared = MainApplication.getContext().getSharedPreferences("share", MODE_PRIVATE);
+                    Map<String, Object> mapParam = (Map<String, Object>) mShared.getAll();
+                    for (Map.Entry<String, Object> item_map : mapParam.entrySet()) {
+                        String key = item_map.getKey();
+                        Object value = item_map.getValue();
+                        if(key.equals("id")) {
+                            myId = Integer.valueOf(value.toString());
                         }
                     }
                     if(myId == -9) {

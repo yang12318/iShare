@@ -7,6 +7,7 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Environment;
@@ -21,6 +22,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
@@ -33,10 +35,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.OvershootInterpolator;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextSwitcher;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ajguan.library.EasyRefreshLayout;
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -61,6 +66,8 @@ import okhttp3.Call;
 import okhttp3.Response;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class DynamicFragment extends Fragment implements EasyPermissions.PermissionCallbacks, BGANinePhotoLayout.Delegate{
 
@@ -101,11 +108,14 @@ public class DynamicFragment extends Fragment implements EasyPermissions.Permiss
             Userid = bundle.getInt("id");
         }
         if (Userid == -1) {
-            MainApplication app = MainApplication.getInstance();
-            Map<String, Integer> mapParam = app.mInfoMap;
-            for(Map.Entry<String, Integer> item_map:mapParam.entrySet()) {
-                if(item_map.getKey().equals("id")) {
-                    Userid = item_map.getValue();
+            SharedPreferences mShared;
+            mShared = MainApplication.getContext().getSharedPreferences("share", MODE_PRIVATE);
+            Map<String, Object> mapParam = (Map<String, Object>) mShared.getAll();
+            for (Map.Entry<String, Object> item_map : mapParam.entrySet()) {
+                String key = item_map.getKey();
+                Object value = item_map.getValue();
+                if(key.equals("id")) {
+                    Userid = Integer.valueOf(value.toString());
                     myId = Userid;
                 }
             }
@@ -197,11 +207,14 @@ public class DynamicFragment extends Fragment implements EasyPermissions.Permiss
             if (view.getId() == R.id.tv_username || view.getId() == R.id.ci_head) {
                 int myId = -9;
                 int userId = list.get(position).getUserId();
-                MainApplication app = MainApplication.getInstance();
-                Map<String, Integer> mapParam = app.mInfoMap;
-                for(Map.Entry<String, Integer> item_map:mapParam.entrySet()) {
-                    if(item_map.getKey().equals("id")) {
-                        myId = item_map.getValue();
+                SharedPreferences mShared;
+                mShared = MainApplication.getContext().getSharedPreferences("share", MODE_PRIVATE);
+                Map<String, Object> mapParam = (Map<String, Object>) mShared.getAll();
+                for (Map.Entry<String, Object> item_map : mapParam.entrySet()) {
+                    String key = item_map.getKey();
+                    Object value = item_map.getValue();
+                    if(key.equals("id")) {
+                        myId = Integer.valueOf(value.toString());
                     }
                 }
                 if(myId == -9) {

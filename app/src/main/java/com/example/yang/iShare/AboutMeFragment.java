@@ -1,6 +1,7 @@
 package com.example.yang.iShare;
 
 import android.annotation.SuppressLint;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.content.Intent;
@@ -22,8 +23,10 @@ import android.widget.Toast;
 import com.ajguan.library.EasyRefreshLayout;
 import com.ajguan.library.LoadModel;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.example.yang.iShare.Utils.HelloHttp;
 import com.example.yang.iShare.adapter.AboutMeAdapter;
+import com.example.yang.iShare.adapter.Info1Adapter;
 import com.example.yang.iShare.bean.Info1;
 
 import org.json.JSONArray;
@@ -38,6 +41,8 @@ import java.util.Map;
 
 import okhttp3.Call;
 import okhttp3.Response;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class AboutMeFragment extends Fragment{
     private List<Info1> mInfoList;
@@ -77,11 +82,14 @@ public class AboutMeFragment extends Fragment{
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_about_me, container, false);
         Log.e("AboutMe", "onCreateView");
-        MainApplication app = MainApplication.getInstance();
-        Map<String, Integer> mapParam = app.mInfoMap;
-        for(Map.Entry<String, Integer> item_map:mapParam.entrySet()) {
-            if(item_map.getKey().equals("id")) {
-                myId = item_map.getValue();
+        SharedPreferences mShared;
+        mShared = MainApplication.getContext().getSharedPreferences("share", MODE_PRIVATE);
+        Map<String, Object> mapParam = (Map<String, Object>) mShared.getAll();
+        for (Map.Entry<String, Object> item_map : mapParam.entrySet()) {
+            String key = item_map.getKey();
+            Object value = item_map.getValue();
+            if(key.equals("id")) {
+                myId = Integer.valueOf(value.toString());
             }
         }
         if(myId == -10) {
