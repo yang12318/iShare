@@ -34,8 +34,7 @@
             android:textSize="15sp"
             android:gravity="center"
             android:layout_height="50dp"
-            android:id="@+id/btn_search"
-            />
+            android:id="@+id/btn_search"/>
     </RelativeLayout>
     <android.support.design.widget.TabLayout
             android:id="@+id/tabs"

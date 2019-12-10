@@ -6,9 +6,9 @@
     <com.ajguan.library.EasyRefreshLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/el_hot">
+            android:id="@+id/el_home_me">
         <android.support.v7.widget.RecyclerView
-                android:id="@+id/rv_hot"
+                android:id="@+id/rv_home_me"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:paddingRight="8dp"
