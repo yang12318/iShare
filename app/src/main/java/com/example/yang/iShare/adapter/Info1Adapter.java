@@ -24,8 +24,8 @@ public class Info1Adapter extends BaseQuickAdapter<Info1, BaseViewHolder> {
         helper.setText(R.id.about_follow_username, item.getUserName());
         helper.setText(R.id.about_follow_time, item.getTime());
         helper.setText(R.id.about_follow_like, "给帖子点了赞");
-        Glide.with(mContext).load("http://ktchen.cn" + item.getSrc()).into((CircleImageView) helper.getView(R.id.about_follow_head));
-        Glide.with(mContext).load("http://ktchen.cn" + item.getPhoto_0()).into((ImageView) helper.getView(R.id.about_follow_picture));
+        Glide.with(mContext).load("http://ins.itstudio.club" + item.getSrc()).into((CircleImageView) helper.getView(R.id.about_follow_head));
+        Glide.with(mContext).load("http://ins.itstudio.club" + item.getPhoto_0()).into((ImageView) helper.getView(R.id.about_follow_picture));
         helper.addOnClickListener(R.id.about_follow_username);
         helper.addOnClickListener(R.id.about_follow_head);
         helper.addOnClickListener(R.id.about_follow_picture);

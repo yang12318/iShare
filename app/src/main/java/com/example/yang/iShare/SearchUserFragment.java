@@ -1,33 +1,37 @@
 package com.example.yang.iShare;
 
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.support.v4.app.Fragment;
-import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.support.annotation.RequiresApi;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.ajguan.library.EasyRefreshLayout;
 import com.ajguan.library.LoadModel;
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.example.yang.iShare.Utils.HelloHttp;
-import com.example.yang.iShare.adapter.AboutMeAdapter;
-import com.example.yang.iShare.adapter.Info1Adapter;
-import com.example.yang.iShare.bean.Info1;
+import com.example.yang.iShare.adapter.FollowPersonAdapter;
+import com.example.yang.iShare.bean.Person;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -38,6 +42,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import okhttp3.Call;
 import okhttp3.Response;
@@ -45,42 +50,41 @@ import okhttp3.Response;
 import static android.content.Context.MODE_PRIVATE;
 
 public class SearchUserFragment extends Fragment{
-    private List<Info1> mInfoList;
+    //private View view;
+    private View view2;
+    private Button btn_search;
+    private EditText et_search;
+    private List<Person> list;
     private RecyclerView recyclerView;
     private EasyRefreshLayout easyRefreshLayout;
-    private View view;
-    private String mtd_id;
-    private static int myId = -10;
-    private AboutMeAdapter madapter;
+    private FollowPersonAdapter adapter;
+    private int last_user_id = 0;
+    private int myId = -10;
+    private String last_string = null;
 
-   /* public static AboutMeFragment newInstance(String mtd_id) {
-        AboutMeFragment f = new AboutMeFragment();
-        Bundle b = new Bundle();
-        b.putString("id", mtd_id);
-        f.setArguments(b);
-        return f;
-    }*/
+    public static SearchUserFragment newInstance(String param1) {
+        SearchUserFragment fragment = new SearchUserFragment();
+        Bundle args = new Bundle();
+        args.putString("agrs1", param1);
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     public SearchUserFragment() {
 
     }
-    //    @Override
-//    protected int getLayoutResId() {
-//        return super.getLayoutResId();
-//    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Bundle arguments = getArguments();
-//        if (arguments != null) {
-//            mtd_id = arguments.getString("id");
-//        }
-
+        Bundle bundle = getArguments();
     }
-    @RequiresApi(api = Build.VERSION_CODES.M)
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_search_user, container, false);
+        //view = inflater.inflate(R.layout.fragment_search, container, false);
+        view2 = inflater.inflate(R.layout.fragment_search_user, container, false);
         SharedPreferences mShared;
         mShared = MainApplication.getContext().getSharedPreferences("share", MODE_PRIVATE);
         Map<String, Object> mapParam = (Map<String, Object>) mShared.getAll();
@@ -92,159 +96,204 @@ public class SearchUserFragment extends Fragment{
             }
         }
         if(myId == -10) {
-            Toast.makeText(getActivity(), "全局内存中保存的信息为空", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "全局内存中保存的信息为空", Toast.LENGTH_SHORT).show();
         }
-        /*madapter = new AboutMeAdapter(mInfoList,myId);
-        madapter.openLoadAnimation(BaseQuickAdapter.SCALEIN);
-//        recyclerView.setAdapter(madapter);
-        //adapter = new Info1Adapter(R.layout.item_about_follow, mInfoList);
+        list = new ArrayList<>();
+        //btn_search = (Button) view.findViewById(R.id.btn_search);
+        //et_search = (EditText) view.findViewById(R.id.et_search);
+        //et_search.setText("");
+        Drawable db_nickname=getResources().getDrawable(R.drawable.search2);
+        db_nickname.setBounds(0,0,75,75);
+        //et_search.setCompoundDrawables(db_nickname,null,null,null);
+        adapter = new FollowPersonAdapter(R.layout.item_follow, list, myId);
         initView();
-        initData();
-        madapter.setNewData(mInfoList);
         initAdapter();
-        madapter.bindToRecyclerView(recyclerView);
-        madapter.setEmptyView(R.layout.empty_home);
-        madapter.setHeaderFooterEmpty(true, true);*/
-        Bundle bundle = getArguments();
-        return view;
-    }
-    @Override
-    public void onResume() {
-        super.onResume();
+        adapter.bindToRecyclerView(recyclerView);
+        /*btn_search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String s = et_search.getText().toString().trim();
+                if(s == null || s.length() <= 0) {
+                    showToast("您还未填写要搜索的内容");
+                    return;
+                }
+                if(s.length() > 15) {
+                    showToast("您搜索的关键字长度过长");
+                    return;
+                }
+                adapter.setEmptyView(R.layout.empty_list);
+                adapter.setHeaderFooterEmpty(true, true);
+                last_string = s;
+                initData(s);
+                initAdapter();
+            }
+        });*/
+        return view2;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
+    private void showToast(String s) {
+        Toast.makeText(getActivity(), s, Toast.LENGTH_SHORT).show();
+    }
+
     private void initView() {
-        recyclerView = (RecyclerView) view.findViewById(R.id.rv_search_user);
+        recyclerView = (RecyclerView) view2.findViewById(R.id.rv_search_user);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        easyRefreshLayout = (EasyRefreshLayout) view.findViewById(R.id.search_me);
-        easyRefreshLayout.setLoadMoreModel(LoadModel.NONE);
+        easyRefreshLayout = (EasyRefreshLayout) view2.findViewById(R.id.search_me);
+        easyRefreshLayout.setEnablePullToRefresh(false);
         easyRefreshLayout.addEasyEvent(new EasyRefreshLayout.EasyEvent() {
             @Override
             public void onLoadMore() {
-                //不具备上拉加载功能
+                Map<String, Object> map = new HashMap<>();
+                map.put("searchType", "user");
+                map.put("keyword", last_string);
+                Map<String, Object> map2 = new HashMap<>();
+                map2.put("page", 0);
+                map2.put("user_id", last_user_id);
+                HelloHttp.sendSpecialPostRequest("api/search", map2, map, new okhttp3.Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        Log.e("SearchFragment", "FAILURE");
+                        Looper.prepare();
+                        showToast("服务器错误");
+                        Looper.loop();
+                    }
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        String responseData = response.body().string();
+                        Log.d("SearchFragment", responseData);
+                        try {
+                            JSONObject jsonObject1 = new JSONObject(responseData);
+                            String result = jsonObject1.getString("status");
+                            if(result.equals("Success")) {
+                                JSONArray jsonArray = jsonObject1.getJSONArray("result");
+                                int length = jsonArray.length();
+                                for(int i = 0; i < length; i++) {
+                                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+                                    Person person = new Person();
+                                    person.setId(jsonObject.getInt("user_id"));
+                                    person.setName(jsonObject.getString("username"));
+                                    person.setIsFollowed(jsonObject.getBoolean("is_guanzhu"));
+                                    person.setSrc(jsonObject.getString("profile_picture"));
+                                    person.setNickname(jsonObject.getString("nickname"));
+                                    list.add(person);
+                                }
+                                last_user_id = list.get(list.size()-1).getId();
+                                mHandler.sendEmptyMessageDelayed(1, 0);
+                            }
+                            else if(result.equals("null")) {
+                                Looper.prepare();
+                                Toast.makeText(getContext(),"没有更多了", Toast.LENGTH_SHORT).show();
+                                Looper.loop();
+                                return;
+                            }
+                            else {
+                                Looper.prepare();
+                                showToast(result);
+                                Looper.loop();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+
+                easyRefreshLayout.loadMoreComplete(new EasyRefreshLayout.Event() {
+                    @Override
+                    public void complete() {
+                        adapter.setNewData(list);
+                        adapter.notifyDataSetChanged();
+                    }
+                }, 500);
             }
 
             @Override
             public void onRefreshing() {
-                //initData();
-                //initAdapter();
-                easyRefreshLayout.loadMoreComplete(new EasyRefreshLayout.Event() {
-                    @Override
-                    public void complete() {
-//                        madapter.setNewData(mInfoList);
-                        easyRefreshLayout.refreshComplete();
-                    }
-                }, 500);
+                //easyRefreshLayout.refreshComplete();
             }
         });
     }
 
-    /*private void initData() {
+    private void initData(String s) {
+        list = new ArrayList<>();
         Map<String, Object> map = new HashMap<>();
-        mInfoList = new ArrayList<>();
-        HelloHttp.sendGetRequest("api/user/messages", map, new okhttp3.Callback() {
+        map.put("searchType", "user");
+        map.put("keyword", s);
+        Map<String, Object> map2 = new HashMap<>();
+        map2.put("page", 1);
+        try {
+            InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken()
+                    ,InputMethodManager.HIDE_NOT_ALWAYS);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        HelloHttp.sendSpecialPostRequest("api/search", map2, map, new okhttp3.Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                Log.e("AboutMeFragment", "FAILURE");
+                Log.e("SearchFragment", "FAILURE");
                 Looper.prepare();
-                Toast.makeText(getActivity(), "服务器错误", Toast.LENGTH_SHORT).show();
+                showToast("服务器错误");
                 Looper.loop();
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
+                list.clear();
                 String responseData = response.body().string();
-                Log.d("AboutMeFragment", responseData);
+                Log.d("SearchFragment", responseData);
                 try {
                     JSONObject jsonObject1 = new JSONObject(responseData);
-                    JSONArray jsonArray = null;
-                    jsonArray = jsonObject1.getJSONArray("result");
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        Info1 info1 = new Info1();
-                        JSONObject jsonObject = jsonArray.getJSONObject(i);
-                        info1.setMs_type(jsonObject.getInt("messageType"));
-                        switch (info1.getMs_type()){
-                            case 1:{
-                                info1.setUserId(jsonObject.getInt("user_id"));
-                                info1.setSrc(jsonObject.getString("profile_picture"));
-                                info1.setUserName(jsonObject.getString("username"));
-                                info1.setIsFollowed(jsonObject.getBoolean("is_guanzhu"));
-                                mInfoList.add(info1);
-                                break;
-                            }
-                            case 2:{
-                                info1.setUserId(jsonObject.getInt("user_id"));
-                                info1.setPostId(jsonObject.getInt("post_id"));
-                                info1.setPhoto_0(jsonObject.getString("photo_0"));
-                                info1.setPost_userId(jsonObject.getInt("post_user_id"));
-                                info1.setSrc(jsonObject.getString("profile_picture"));
-                                info1.setUserName(jsonObject.getString("username"));
-                                mInfoList.add(info1);
-                                break;
-                            }
-                            case 3:{
-                                info1.setUserId(jsonObject.getInt("user_id"));
-                                info1.setPostId(jsonObject.getInt("post_id"));
-                                info1.setSrc(jsonObject.getString("profile_picture"));
-                                info1.setContent(jsonObject.getString("content"));
-                                info1.setPhoto_0(jsonObject.getString("photo_0"));
-                                info1.setPost_userId(jsonObject.getInt("post_user_id"));
-                                info1.setUserName(jsonObject.getString("username"));
-                                mInfoList.add(info1);
-                                break;
-                            }
+                    String result = jsonObject1.getString("status");
+                    if(result.equals("Success")) {
+                        JSONArray jsonArray = jsonObject1.getJSONArray("result");
+                        int length = jsonArray.length();
+                        for(int i = 0; i < length; i++) {
+                            JSONObject jsonObject = jsonArray.getJSONObject(i);
+                            Person person = new Person();
+                            person.setId(jsonObject.getInt("user_id"));
+                            person.setName(jsonObject.getString("username"));
+                            person.setIsFollowed(jsonObject.getBoolean("is_guanzhu"));
+                            person.setSrc(jsonObject.getString("profile_picture"));
+                            person.setNickname(jsonObject.getString("nickname"));
+                            list.add(person);
                         }
+                        last_user_id = list.get(list.size()-1).getId();
+                        mHandler.sendEmptyMessageDelayed(1, 0);
                     }
-                    mHandler.sendEmptyMessageDelayed(1, 0);
+                    else if(result.equals("null")) {
+                        Looper.prepare();
+                        Toast.makeText(getContext(),"没有搜索到您找寻找的内容，减少关键字再试试吧", Toast.LENGTH_SHORT).show();
+                        mHandler.sendEmptyMessageDelayed(1, 0);
+                        Looper.loop();
+                        return;
+                    }
+                    else {
+                        Looper.prepare();
+                        showToast(result);
+                        mHandler.sendEmptyMessageDelayed(1, 0);
+                        Looper.loop();
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    try {
-                        String result = null;
-                        result = new JSONObject(responseData).getString("status");
-                        Looper.prepare();
-                        Toast.makeText(getActivity(), result, Toast.LENGTH_SHORT).show();
-                        Looper.loop();
-                    } catch (JSONException e1) {
-                        e1.printStackTrace();
-                    }
+                    mHandler.sendEmptyMessageDelayed(1, 0);
                 }
             }
         });
     }
 
     private void initAdapter() {
-        madapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+        adapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @TargetApi(Build.VERSION_CODES.KITKAT)
+            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
             @Override
-            public void onItemChildClick(BaseQuickAdapter adapter, View view, final int position) {
-                if (view.getId() == R.id.about_me_username || view.getId() == R.id.me_username || view.getId() == R.id.tv_me_username || view.getId() == R.id.about_me_head || view.getId() == R.id.me_head || view.getId() == R.id.ci_me_head) {
-                    int userId = mInfoList.get(position).getUserId();
-                    if(myId == userId) {
-                        //这个人是我自己
-                        Intent intent = new Intent(getActivity(), MainActivity.class);
-                        intent.putExtra("me_id",userId );
-                        startActivity(intent);
-                    }
-                    else {
-                        //这个人不是我
-                        Intent intent = new Intent(getActivity(), UserActivity.class);
-                        intent.putExtra("userId", userId);
-                        startActivity(intent);
-                    }
-                }
-                else if(view.getId() == R.id.about_me_picture || view.getId() == R.id.iv_me_picture || view.getId() == R.id.tv_me_comment) {
-                    Intent intent = new Intent(getActivity(), DetailActivity.class);
-                    intent.putExtra("id", mInfoList.get(position).getPostId());
-                    intent.putExtra("user_id",mInfoList.get(position).getPost_userId());
-                    startActivity(intent);
-                }
-                else if(view.getId() == R.id.btn_follow){
-                    int id = mInfoList.get(position).getUserId();
-                    boolean flag = mInfoList.get(position).getIsFollowed();
+            public void onItemChildClick(final BaseQuickAdapter adapter, final View view, final int position) {
+                if (view.getId() == R.id.follow_cancel) {
+                    int id = list.get(position).getId();
+                    boolean flag = list.get(position).getIsFollowed();
                     Map<String, Object> map = new HashMap<>();
                     map.put("pk", id);
                     if(flag) {
-                        //已点赞
                         changeStyle(false, position);
                         HelloHttp.sendDeleteRequest("api/user/followyou", map, new okhttp3.Callback() {
                             @Override
@@ -252,10 +301,11 @@ public class SearchUserFragment extends Fragment{
                                 Log.e("FollowActivity", "FAILURE");
                                 changeStyle(true, position);
                                 Looper.prepare();
-                                Toast.makeText(getActivity(), "服务器错误", Toast.LENGTH_SHORT).show();
+                                Snackbar.make(view,"服务器错误",Snackbar.LENGTH_SHORT).show();
                                 Looper.loop();
                             }
 
+                            @TargetApi(Build.VERSION_CODES.KITKAT)
                             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
                             @Override
                             public void onResponse(Call call, Response response) throws IOException {
@@ -270,19 +320,19 @@ public class SearchUserFragment extends Fragment{
                                 }
                                 if(result.equals("Success")) {
                                     Looper.prepare();
-                                    Toast.makeText(getActivity(), "已取消关注", Toast.LENGTH_SHORT).show();
+                                    Snackbar.make(view,"已取消关注",Snackbar.LENGTH_SHORT).show();
                                     Looper.loop();
                                 }
                                 else {
                                     changeStyle(true, position);
                                     if(result.equals("UnknownError")) {
                                         Looper.prepare();
-                                        Toast.makeText(getActivity(), "未知错误", Toast.LENGTH_SHORT).show();
+                                        Snackbar.make(view,"未知错误",Snackbar.LENGTH_SHORT).show();
                                         Looper.loop();
                                     }
                                     else {
                                         Looper.prepare();
-                                        Toast.makeText(getActivity(), result, Toast.LENGTH_SHORT ).show();
+                                        Toast.makeText(getContext(), result, Toast.LENGTH_SHORT ).show();
                                         Looper.loop();
                                     }
                                 }
@@ -298,10 +348,11 @@ public class SearchUserFragment extends Fragment{
                                 Log.e("FollowActivity", "FAILURE");
                                 changeStyle(false, position);
                                 Looper.prepare();
-                                Toast.makeText(getActivity(), "服务器错误", Toast.LENGTH_SHORT).show();
+                                Snackbar.make(view,"服务器错误",Snackbar.LENGTH_SHORT).show();
                                 Looper.loop();
                             }
 
+                            @TargetApi(Build.VERSION_CODES.KITKAT)
                             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
                             @Override
                             public void onResponse(Call call, Response response) throws IOException {
@@ -316,19 +367,19 @@ public class SearchUserFragment extends Fragment{
                                 }
                                 if(result != null && result.equals("Success")) {
                                     Looper.prepare();
-                                    Toast.makeText(getActivity(), "关注成功", Toast.LENGTH_SHORT).show();
+                                    Snackbar.make(view,"关注成功",Snackbar.LENGTH_SHORT).show();
                                     Looper.loop();
                                 }
                                 else {
                                     changeStyle(false, position);
                                     if(result.equals("UnknownError")) {
                                         Looper.prepare();
-                                        Toast.makeText(getActivity(), "未知错误", Toast.LENGTH_SHORT).show();
+                                        Snackbar.make(view,"未知错误",Snackbar.LENGTH_SHORT).show();
                                         Looper.loop();
                                     }
                                     else if(result.equals("Failure")) {
                                         Looper.prepare();
-                                        Toast.makeText(getActivity(), "错误：重复的关注请求，已取消关注", Toast.LENGTH_SHORT).show();
+                                        Snackbar.make(view,"错误：重复的关注请求，已取消关注",Snackbar.LENGTH_SHORT).show();
                                         RecyclerView.ViewHolder viewHolder = recyclerView.findViewHolderForAdapterPosition(position);
                                         Looper.loop();
                                     }
@@ -342,21 +393,69 @@ public class SearchUserFragment extends Fragment{
                         });
                     }
                 }
+                else if(view.getId() == R.id.follow_head || view.getId() == R.id.follow_nickname || view.getId() == R.id.follow_username) {
+                    int userId = list.get(position).getId();
+                    if(myId == userId) {
+                        //这个人是我自己
+                        Intent intent = new Intent(getActivity(), MainActivity.class);
+                        intent.putExtra("me_id",userId );
+                        startActivity(intent);
+                    }
+                    else {
+                        //这个人不是我
+                        Intent intent = new Intent(getActivity(), UserActivity.class);
+                        intent.putExtra("userId", userId);
+                        startActivity(intent);
+                    }
+                }
             }
         });
-        recyclerView.setAdapter(madapter);
-    }*/
+        recyclerView.setAdapter(adapter);
+    }
+
     @SuppressLint("HandlerLeak")
     private Handler mHandler = new Handler(){
-        @SuppressLint("CheckResult")
         @Override
         public void handleMessage(Message msg)
         {
             if(msg.what == 1)
             {
-                madapter.setNewData(mInfoList);
+                adapter.setNewData(list);
             }
         }
     };
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    private void changeStyle(final boolean flag, final int position) {
+        Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
+            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+            @Override
+            public void run() {
+                if(flag) {
+                    list.get(position).setIsFollowed(true);
+                    Button btn = (Button) adapter.getViewByPosition(recyclerView, position, R.id.follow_cancel);
+                    if (btn != null) {
+                        btn.setText("关注中");
+                        btn.setTextColor(Color.BLACK);
+                        btn.setBackground(getResources().getDrawable(R.drawable.buttonshape2));
+                    }
+                }
+                else {
+                    list.get(position).setIsFollowed(false);
+                    Button btn = (Button) adapter.getViewByPosition(recyclerView, position, R.id.follow_cancel);
+                    if (btn != null) {
+                        btn.setText("关注");
+                        btn.setTextColor(Color.WHITE);
+                        btn.setBackground(getResources().getDrawable(R.drawable.buttonshape3));
+                    }
+                }
+            }
+        });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        et_search.setText("");
+    }
 }

@@ -131,7 +131,7 @@ public class MeFragment extends Fragment {
                         follow_num = jsonObject.getInt("following_num");
                         concern_num = jsonObject.getInt("followed_num");
                         src = jsonObject.getString("profile_picture");
-                        src = "http://ktchen.cn" + src;
+                        src = "http://ins.itstudio.club" + src;
                         Log.d("MeFragment", src);
                         address = jsonObject.getString("address");
                         introduction = jsonObject.getString("introduction");

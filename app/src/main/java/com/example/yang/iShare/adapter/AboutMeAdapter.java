@@ -28,7 +28,7 @@ public class AboutMeAdapter extends BaseMultiItemQuickAdapter<Info1, BaseViewHol
         switch (helper.getItemViewType()){
             case 1:
                 helper.setText(R.id.me_username, item.getUserName());
-                Glide.with(mContext).load("http://ktchen.cn"+item.getSrc()).into((CircleImageView) helper.getView(R.id.me_head));
+                Glide.with(mContext).load("http://ins.itstudio.club"+item.getSrc()).into((CircleImageView) helper.getView(R.id.me_head));
                 helper.addOnClickListener(R.id.btn_follow);
                 helper.addOnClickListener(R.id.me_head);
                 helper.addOnClickListener(R.id.me_username);
@@ -50,16 +50,16 @@ public class AboutMeAdapter extends BaseMultiItemQuickAdapter<Info1, BaseViewHol
                 break;
             case 2:
                 helper.setText(R.id.about_me_username, item.getUserName());
-                Glide.with(mContext).load("http://ktchen.cn"+item.getPhoto_0()).into((ImageView) helper.getView(R.id.about_me_picture));
-                Glide.with(mContext).load("http://ktchen.cn"+item.getSrc()).into((CircleImageView) helper.getView(R.id.about_me_head));
+                Glide.with(mContext).load("http://ins.itstudio.club"+item.getPhoto_0()).into((ImageView) helper.getView(R.id.about_me_picture));
+                Glide.with(mContext).load("http://ins.itstudio.club"+item.getSrc()).into((CircleImageView) helper.getView(R.id.about_me_head));
                 helper.addOnClickListener(R.id.about_me_username);
                 helper.addOnClickListener(R.id.about_me_head);
                 helper.addOnClickListener(R.id.about_me_picture);
                 break;
             case 3:
                 helper.setText(R.id.tv_me_username, item.getUserName());
-                Glide.with(mContext).load("http://ktchen.cn"+item.getPhoto_0()).into((ImageView) helper.getView(R.id.iv_me_picture));
-                Glide.with(mContext).load("http://ktchen.cn"+item.getSrc()).into((CircleImageView) helper.getView(R.id.ci_me_head));
+                Glide.with(mContext).load("http://ins.itstudio.club"+item.getPhoto_0()).into((ImageView) helper.getView(R.id.iv_me_picture));
+                Glide.with(mContext).load("http://ins.itstudio.club"+item.getSrc()).into((CircleImageView) helper.getView(R.id.ci_me_head));
                 helper.setText(R.id.tv_me_comment, "评论了："+item.getContent());
                 helper.addOnClickListener(R.id.tv_me_username);
                 helper.addOnClickListener(R.id.ci_me_head);

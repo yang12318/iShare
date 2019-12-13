@@ -179,8 +179,8 @@ public class DynamicFragment extends Fragment implements EasyPermissions.Permiss
                             final int length2 = jsonArray.length();
                             for (int j = 0; j < length2; j++) {
                                 JSONObject jsonObject2 = jsonArray.getJSONObject(j);
-                                arrayList.add("http://ktchen.cn" + jsonObject2.getString("photo"));
-                                thumbList.add("http://ktchen.cn" + jsonObject2.getString("photo_thumbnail"));
+                                arrayList.add("http://ins.itstudio.club" + jsonObject2.getString("photo"));
+                                thumbList.add("http://ins.itstudio.club" + jsonObject2.getString("photo_thumbnail"));
                             }
                             dynamic.setPhotos(arrayList);
                             dynamic.setThumbnails(thumbList);
@@ -594,7 +594,7 @@ public class DynamicFragment extends Fragment implements EasyPermissions.Permiss
         }
     }
 
-    class DynamicAdapter extends BaseQuickAdapter<Dynamic, BaseViewHolder> {
+    private class DynamicAdapter extends BaseQuickAdapter<Dynamic, BaseViewHolder> {
         private int myId;
         public DynamicAdapter(int layoutResId, @Nullable List<Dynamic> data, int myId) {
             super(layoutResId, data);
@@ -607,7 +607,7 @@ public class DynamicFragment extends Fragment implements EasyPermissions.Permiss
                 return;
             }
             else {
-                Glide.with(mContext).load("http://ktchen.cn"+item.getSrc()).into((CircleImageView) helper.getView(R.id.ci_head));}
+                Glide.with(mContext).load("http://ins.itstudio.club"+item.getSrc()).into((CircleImageView) helper.getView(R.id.ci_head));}
             helper.setText(R.id.tv_username, item.getUsername());
             helper.setText(R.id.tv_like2, item.getLikes_num()+"次赞");
             if (TextUtils.isEmpty(item.getIntroduction())) {

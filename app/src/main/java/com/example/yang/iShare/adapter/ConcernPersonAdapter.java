@@ -23,7 +23,7 @@ public class ConcernPersonAdapter extends BaseQuickAdapter<Person, BaseViewHolde
     protected void convert(BaseViewHolder helper, Person item) {
         helper.setText(R.id.concern_username, item.getName());
         helper.setText(R.id.concern_nickname, item.getNickname());
-        Glide.with(mContext).load("http://ktchen.cn" + item.getSrc()).into((CircleImageView) helper.getView(R.id.concern_head));
+        Glide.with(mContext).load("http://ins.itstudio.club" + item.getSrc()).into((CircleImageView) helper.getView(R.id.concern_head));
         helper.addOnClickListener(R.id.concern_follow);
         helper.addOnClickListener(R.id.concern_head);
         helper.addOnClickListener(R.id.concern_nickname);

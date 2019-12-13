@@ -535,7 +535,7 @@ public class DetailActivity extends AppCompatActivity implements EasyPermissions
                                 ArrayList<String> arrayList = new ArrayList<>();
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject jsonObject = jsonArray.getJSONObject(i);
-                                    arrayList.add("http://ktchen.cn"+jsonObject.getString("photo"));
+                                    arrayList.add("http://ins.itstudio.club"+jsonObject.getString("photo"));
                                 }
                                 dynamic.setPhotos(arrayList);
                                 mHandler.sendEmptyMessageDelayed(1, 0);
@@ -599,7 +599,7 @@ public class DetailActivity extends AppCompatActivity implements EasyPermissions
                 tv_time.setText(dynamic.getPub_time());
                 tv_review.setText("查看全部"+dynamic.getCom_num()+"条评论");
                 tv_username.setText(dynamic.getUsername());
-                Glide.with(DetailActivity.this).load("http://ktchen.cn"+dynamic.getSrc()).into(ci_head);
+                Glide.with(DetailActivity.this).load("http://ins.itstudio.club"+dynamic.getSrc()).into(ci_head);
                 changeButtonStyle(dynamic.isIs_like(), dynamic.isIs_collect());
 //                ib_like.setImageResource(dynamic.isIs_like() ? R.drawable.like1 : R.drawable.like2);
 //                ib_collect.setImageResource(dynamic.isIs_collect() ? R.drawable.collect1 : R.drawable.collect2);

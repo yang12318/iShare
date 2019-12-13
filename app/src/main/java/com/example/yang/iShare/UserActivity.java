@@ -176,7 +176,7 @@ public class UserActivity extends AppCompatActivity {
                     follow_num = jsonObject.getInt("following_num");
                     concern_num = jsonObject.getInt("followed_num");
                     src = jsonObject.getString("profile_picture");
-                    src = "http://ktchen.cn" + src;
+                    src = "http://ins.itstudio.club" + src;
                     address = jsonObject.getString("address");
                     introduction = jsonObject.getString("introduction");
                     mHandler.sendEmptyMessageDelayed(1, 0);

@@ -23,7 +23,7 @@ public class FollowPersonAdapter extends BaseQuickAdapter<Person, BaseViewHolder
     protected void convert(BaseViewHolder helper, Person item) {
         helper.setText(R.id.follow_username, item.getName());
         helper.setText(R.id.follow_nickname, item.getNickname());
-        Glide.with(mContext).load("http://ktchen.cn"+item.getSrc()).into((CircleImageView) helper.getView(R.id.follow_head));
+        Glide.with(mContext).load("http://ins.itstudio.club"+item.getSrc()).into((CircleImageView) helper.getView(R.id.follow_head));
         helper.addOnClickListener(R.id.follow_cancel);
         helper.addOnClickListener(R.id.follow_head);
         helper.addOnClickListener(R.id.follow_username);

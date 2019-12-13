@@ -123,7 +123,7 @@ public class AlbumFragment extends Fragment{
                         dynamic.setId(jsonObject.getInt("post_id"));
                         dynamic.setUserId(jsonObject.getInt("user_id"));
                         dynamic.setIs_multi(jsonObject.getBoolean("is_many"));
-                        dynamic.setPhoto0("http://ktchen.cn"+jsonObject.getString("photo_0"));
+                        dynamic.setPhoto0("http://ins.itstudio.club"+jsonObject.getString("photo_0"));
                         mDynamicList.add(dynamic);
                     }
                     mHandler.sendEmptyMessageDelayed(1, 0);

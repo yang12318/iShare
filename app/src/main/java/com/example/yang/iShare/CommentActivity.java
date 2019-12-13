@@ -227,7 +227,7 @@ public class CommentActivity extends AppCompatActivity {
                         myReview.setCommenterId(jsonObject.getInt("user_id"));
                         myReview.setPub_time(jsonObject.getString("time"));
                         myReview.setContent(jsonObject.getString("content"));
-                        myReview.setSrc("http://ktchen.cn"+jsonObject.getString("profile_picture"));
+                        myReview.setSrc("http://ins.itstudio.club"+jsonObject.getString("profile_picture"));
                         list.add(myReview);
                     }
                     mHandler.sendEmptyMessageDelayed(1, 0);
