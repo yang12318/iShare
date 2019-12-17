@@ -66,6 +66,9 @@
             android:name="com.example.yang.iShare.CollectActivity"
             android:screenOrientation="portrait" />
         <activity
+                android:name="com.example.yang.iShare.SearchUserActivity"
+                android:screenOrientation="portrait" />
+        <activity
             android:name="com.example.yang.iShare.LoginActivity"
             android:screenOrientation="portrait" />
         <activity android:name="com.example.yang.iShare.ChatClientActivity"></activity>

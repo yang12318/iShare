@@ -291,11 +291,11 @@ public class MeFragment extends Fragment {
                 intent = new Intent(getActivity(), ChangeCodeActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.it_chat:
-                intent = new Intent(getActivity(), ChatClientActivity.class);
-                intent.putExtra("username", username);
-                startActivity(intent);
-                break;
+//            case R.id.it_chat:
+//                intent = new Intent(getActivity(), ChatClientActivity.class);
+//                intent.putExtra("username", username);
+//                startActivity(intent);
+//                break;
         }
         return true;
     }
