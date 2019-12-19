@@ -9,106 +9,101 @@
     android:paddingTop="10dp"
     tools:context="com.example.yang.iShare.SearchFragment">
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp">
-        <EditText
-            android:layout_width="wrap_content"
-            android:ems="20"
-            android:drawablePadding="8dp"
-            android:textSize="18sp"
-            android:textColor="#515151"
-            android:textCursorDrawable="@drawable/edit_cursor3"
-            android:background="@drawable/editshape2"
-            android:singleLine="true"
-            android:drawableLeft="@drawable/search2"
+            android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:id="@+id/et_search" />
-        <Button
-            android:text="搜索"
-            android:background="@null"
-            android:layout_alignParentRight="true"
-            android:layout_width="60dp"
-            android:textSize="15sp"
-            android:gravity="center"
-            android:layout_height="50dp"
-            android:id="@+id/btn_search"/>
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp">
+            <EditText
+                android:layout_width="wrap_content"
+                android:ems="20"
+                android:drawablePadding="8dp"
+                android:textSize="18sp"
+                android:textColor="#515151"
+                android:textCursorDrawable="@drawable/edit_cursor3"
+                android:background="@drawable/editshape2"
+                android:singleLine="true"
+                android:drawableLeft="@drawable/search2"
+                android:layout_height="50dp"
+                android:id="@+id/et_search" />
+            <Button
+                android:text="搜索"
+                android:background="@null"
+                android:layout_alignParentRight="true"
+                android:layout_width="60dp"
+                android:textSize="15sp"
+                android:gravity="center"
+                android:layout_height="50dp"
+                android:id="@+id/btn_search"/>
     </RelativeLayout>
+<!--    <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_below="@id/et_search"-->
+<!--            android:orientation="vertical" >-->
+<!--        <android.support.v7.widget.CardView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content">-->
+<!--            <RelativeLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="match_parent">-->
+<!--                <de.hdodenhof.circleimageview.CircleImageView-->
+<!--                        android:id="@+id/search_head"-->
+<!--                        android:layout_width="45dp"-->
+<!--                        android:layout_height="45dp"-->
+<!--                        android:layout_marginLeft="10dp"-->
+<!--                        android:layout_marginTop="10dp"-->
+<!--                        android:layout_marginBottom="10dp" />-->
+<!--                <TextView-->
+<!--                        android:id="@+id/search_username"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginLeft="10dp"-->
+<!--                        android:layout_marginTop="16dp"-->
+<!--                        android:layout_toRightOf="@id/search_head"-->
+<!--                        android:text="全名"-->
+<!--                        android:singleLine="true"-->
+<!--                        android:textSize="14sp"-->
+<!--                        android:textStyle="bold" />-->
+<!--                <TextView-->
+<!--                        android:id="@+id/search_nickname"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_below="@+id/search_username"-->
+<!--                        android:layout_marginBottom="10dp"-->
+<!--                        android:layout_toRightOf="@+id/search_head"-->
+<!--                        android:layout_marginLeft="10dp"-->
+<!--                        android:layout_marginTop="3dp"-->
+<!--                        android:text="昵称"-->
+<!--                        android:singleLine="true"-->
+<!--                        android:textColor="#696969"-->
+<!--                        android:textSize="12sp" />-->
+
+<!--                <Button-->
+<!--                        android:id="@+id/search_more"-->
+<!--                        android:layout_width="75dp"-->
+<!--                        android:layout_height="29dp"-->
+<!--                        style="?android:attr/borderlessButtonStyle"-->
+<!--                        android:layout_alignParentEnd="true"-->
+<!--                        android:layout_alignParentRight="true"-->
+<!--                        android:layout_centerVertical="true"-->
+<!--                        android:layout_marginEnd="13dp"-->
+<!--                        android:layout_marginRight="13dp"-->
+<!--                        android:background="@drawable/buttonshape2"-->
+<!--                        android:text="更多" />-->
+<!--            </RelativeLayout>-->
+<!--        </android.support.v7.widget.CardView>-->
+<!--    </LinearLayout>-->
     <com.ajguan.library.EasyRefreshLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/easysearch">
-        <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/et_search"
-                android:orientation="vertical" >
-            <android.support.v7.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-                    <de.hdodenhof.circleimageview.CircleImageView
-                            android:id="@+id/search_head"
-                            android:layout_width="45dp"
-                            android:layout_height="45dp"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginBottom="10dp" />
-                    <TextView
-                            android:id="@+id/search_username"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginTop="16dp"
-                            android:layout_toRightOf="@id/search_head"
-                            android:text="全名"
-                            android:singleLine="true"
-                            android:textSize="14sp"
-                            android:textStyle="bold" />
-                    <TextView
-                            android:id="@+id/search_nickname"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/search_username"
-                            android:layout_marginBottom="10dp"
-                            android:layout_toRightOf="@+id/search_head"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginTop="3dp"
-                            android:text="昵称"
-                            android:singleLine="true"
-                            android:textColor="#696969"
-                            android:textSize="12sp" />
-
-                    <Button
-                            android:id="@+id/search_more"
-                            android:layout_width="75dp"
-                            android:layout_height="29dp"
-                            style="?android:attr/borderlessButtonStyle"
-                            android:layout_alignParentEnd="true"
-                            android:layout_alignParentRight="true"
-                            android:layout_centerVertical="true"
-                            android:layout_marginEnd="13dp"
-                            android:layout_marginRight="13dp"
-                            android:background="@drawable/buttonshape2"
-                            android:text="更多" />
-                </RelativeLayout>
-            </android.support.v7.widget.CardView>
-        </LinearLayout>
-        <LinearLayout
+            android:layout_height="0dp"
+            android:layout_weight="10"
+            android:id="@+id/easysearch"
+            >
+        <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_search_dynamic"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
-                    <android.support.v7.widget.RecyclerView
-                            android:id="@+id/rv_search_dynamic"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:paddingRight="8dp"
-                            android:paddingLeft="8dp"
-                            android:fadingEdge="none">
-                    </android.support.v7.widget.RecyclerView>
-        </LinearLayout>
+                android:fadingEdge="none">
+        </android.support.v7.widget.RecyclerView>
     </com.ajguan.library.EasyRefreshLayout>
 </LinearLayout>

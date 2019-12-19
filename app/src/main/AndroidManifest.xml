@@ -9,7 +9,7 @@
     <application
         android:name="com.example.yang.iShare.MainApplication"
         android:allowBackup="true"
-        android:icon="@drawable/chat"
+        android:icon="@drawable/share"
         android:label="iShare"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"

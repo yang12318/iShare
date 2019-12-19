@@ -95,8 +95,9 @@ public class AboutMeFragment extends Fragment{
         if(myId == -10) {
             Toast.makeText(getActivity(), "全局内存中保存的信息为空", Toast.LENGTH_SHORT).show();
         }
+
         madapter = new AboutMeAdapter(mInfoList,myId);
-        madapter.openLoadAnimation(BaseQuickAdapter.SCALEIN);
+        madapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_RIGHT);
 //        recyclerView.setAdapter(madapter);
         //adapter = new Info1Adapter(R.layout.item_about_follow, mInfoList);
         initView();

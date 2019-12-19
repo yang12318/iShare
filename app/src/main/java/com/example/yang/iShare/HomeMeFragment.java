@@ -120,7 +120,7 @@ public class HomeMeFragment extends Fragment implements EasyPermissions.Permissi
         if(myId == -10) {
             Toast.makeText(getActivity(), "全局内存中保存的信息为空", Toast.LENGTH_SHORT).show();
         }
-        adapter = new DynamicAdapter(R.layout.item_dynamic, list,myId);
+        adapter = new HomeMeFragment.DynamicAdapter(R.layout.item_dynamic, list,myId);
         initView();
         initData();
         adapter.setNewData(list);
@@ -192,7 +192,7 @@ public class HomeMeFragment extends Fragment implements EasyPermissions.Permissi
                             }
                             else if(result.equals("null")){
                                 Looper.prepare();
-                                Toast.makeText(getActivity(), "没有更多数据了", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getContext(), "没有更多数据了", Toast.LENGTH_SHORT).show();
                                 Looper.loop();
                             }
                             else {

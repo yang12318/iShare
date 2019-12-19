@@ -127,13 +127,13 @@ public class HomeHotFragment extends Fragment implements EasyPermissions.Permiss
         if(myId == -10) {
             Toast.makeText(getActivity(), "全局内存中保存的信息为空", Toast.LENGTH_SHORT).show();
         }
-        adapter = new HomeHotFragment.DynamicAdapter(R.layout.item_dynamic, list,myId);
+        adapter = new HomeHotFragment.DynamicAdapter(R.layout.item_dynamic, list, myId);
         initView();
         initData();
         adapter.setNewData(list);
         initAdapter();
         adapter.bindToRecyclerView(recyclerView);
-        adapter.setEmptyView(R.layout.empty_home);
+        //adapter.setEmptyView(R.layout.empty_home);
         adapter.setHeaderFooterEmpty(true, true);
         return view;
     }
@@ -143,7 +143,7 @@ public class HomeHotFragment extends Fragment implements EasyPermissions.Permiss
         recyclerView = (RecyclerView) view.findViewById(R.id.rv_hot);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         easyRefreshLayout = (EasyRefreshLayout) view.findViewById(R.id.el_hot);
-        easyRefreshLayout.setLoadMoreModel(LoadModel.NONE);
+//        easyRefreshLayout.setLoadMoreModel(LoadModel.NONE);
         easyRefreshLayout.addEasyEvent(new EasyRefreshLayout.EasyEvent() {
             @Override
             public void onLoadMore() {
@@ -225,12 +225,13 @@ public class HomeHotFragment extends Fragment implements EasyPermissions.Permiss
 
             @Override
             public void onRefreshing() {
-                //initData();
-                //initAdapter();
+                initData();
+                last_post_id = 0;
+                initAdapter();
                 easyRefreshLayout.loadMoreComplete(new EasyRefreshLayout.Event() {
                     @Override
                     public void complete() {
-//                        madapter.setNewData(mInfoList);
+                        adapter.setNewData(list);
                         easyRefreshLayout.refreshComplete();
                     }
                 }, 500);

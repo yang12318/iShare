@@ -78,7 +78,7 @@ public class AboutFollowFragment extends Fragment{
         Log.e("AboutFollow", "onCreateView");
         Bundle bundle = getArguments();
         adapter = new Info1Adapter(R.layout.item_about_follow, mInfoList);
-        adapter.openLoadAnimation(BaseQuickAdapter.SCALEIN);
+        adapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_RIGHT);
         initView();
         initData();
         adapter.setNewData(mInfoList);
