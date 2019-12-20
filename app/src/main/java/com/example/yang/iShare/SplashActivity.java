@@ -44,8 +44,8 @@ public class SplashActivity extends AppCompatActivity {
             mainIntent.setClass(SplashActivity.this, LoginActivity.class);
         }
         else if(DateUtil.getDeltaDate(old_date) <= 7) {
-            MainApplication application = MainApplication.getInstance();
-            application.mInfoMap.put("id", id);
+//            MainApplication application = MainApplication.getInstance();
+//            application.mInfoMap.put("id", id);
             mainIntent.setClass(SplashActivity.this, MainActivity.class);
         }
         else if(DateUtil.getDeltaDate(old_date) > 7) {

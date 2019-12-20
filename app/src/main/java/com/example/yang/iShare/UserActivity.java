@@ -239,107 +239,194 @@ public class UserActivity extends AppCompatActivity {
         btn_follow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
-            if(!flag) {
-                //现在是没关注状态
-                setButtonStyle(true);
-                Map<String, Object> map = new HashMap<>();
-                map.put("pk", userId);
-                HelloHttp.sendPostRequest("api/user/followyou", map, new okhttp3.Callback() {
-                    @Override
-                    public void onFailure(Call call, IOException e) {
-                        Log.e("UserActivity", "FAILURE");
-                        setButtonStyle(false);
-                        Looper.prepare();
-                        Toast.makeText(UserActivity.this, "服务器错误", Toast.LENGTH_SHORT).show();
-                        Looper.loop();
-                    }
-
-                    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
-                    @Override
-                    public void onResponse(Call call, Response response) throws IOException {
-                        String responseData = response.body().string();
-                        Log.d("UserActivity", responseData);
-                        String result = null;
-                        try {
-                            result = new JSONObject(responseData).getString("status");
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+                if(!flag) {
+                    //现在是没关注状态
+                    setButtonStyle(true);
+                    Map<String, Object> map = new HashMap<>();
+                    map.put("pk", userId);
+                    HelloHttp.sendPostRequest("api/user/followyou", map, new okhttp3.Callback() {
+                        @Override
+                        public void onFailure(Call call, IOException e) {
+                            Log.e("UserActivity", "FAILURE");
                             setButtonStyle(false);
-                        }
-                        if(result != null && result.equals("Success")) {
                             Looper.prepare();
-                            Snackbar.make(v,"关注成功",Snackbar.LENGTH_SHORT).show();
+                            Toast.makeText(UserActivity.this, "服务器错误", Toast.LENGTH_SHORT).show();
                             Looper.loop();
                         }
-                        else {
-                            setButtonStyle(false);
-                            if(result != null && result.equals("UnknownError")) {
-                                Looper.prepare();
-                                Snackbar.make(v,"未知错误",Snackbar.LENGTH_SHORT).show();
-                                Looper.loop();
+
+                        @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+                        @Override
+                        public void onResponse(Call call, Response response) throws IOException {
+                            String responseData = response.body().string();
+                            Log.d("UserActivity", responseData);
+                            String result = null;
+                            try {
+                                result = new JSONObject(responseData).getString("status");
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                                setButtonStyle(false);
                             }
-                            else if(result != null && result.equals("Failure")) {
+                            if(result != null && result.equals("Success")) {
                                 Looper.prepare();
-                                Snackbar.make(v,"错误：重复的关注请求，已取消关注",Snackbar.LENGTH_SHORT).show();
+                                Snackbar.make(v,"关注成功",Snackbar.LENGTH_SHORT).show();
+                                Map<String, Object> map = new HashMap<>();
+                                HelloHttp.sendGetRequest("api/user/detail/"+Integer.toString(userId), map, new okhttp3.Callback() {
+                                    @Override
+                                    public void onFailure(Call call, IOException e) {
+                                        Log.e("UserActivity", "FAILURE");
+                                        Looper.prepare();
+                                        Toast.makeText(UserActivity.this, "服务器未响应", Toast.LENGTH_SHORT).show();
+                                        Looper.loop();
+                                    }
+
+                                    @Override
+                                    public void onResponse(Call call, Response response) throws IOException {
+                                        String responseData = response.body().string();
+                                        Log.d("UserActivity", responseData);
+                                        try {
+                                            JSONObject jsonObject1 = new JSONObject(responseData);
+                                            JSONObject jsonObject = jsonObject1.getJSONObject("result");
+                                            posts = jsonObject1.getInt("post_num");
+                                            username = jsonObject.getString("username");
+                                            nickname = jsonObject.getString("nickname");
+                                            gender = jsonObject.getInt("gender");
+                                            birthday = jsonObject.getString("birthday");
+                                            follow_num = jsonObject.getInt("following_num");
+                                            concern_num = jsonObject.getInt("followed_num");
+                                            src = jsonObject.getString("profile_picture");
+                                            src = "http://ins.itstudio.club" + src;
+                                            address = jsonObject.getString("address");
+                                            introduction = jsonObject.getString("introduction");
+                                            mHandler.sendEmptyMessageDelayed(1, 0);
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                            String result = null;
+                                            try {
+                                                result = new JSONObject(responseData).getString("status");
+                                                Looper.prepare();
+                                                Toast.makeText(UserActivity.this,result, Toast.LENGTH_SHORT).show();
+                                                Looper.loop();
+                                            } catch (JSONException e1) {
+                                                e1.printStackTrace();
+                                            }
+                                        }
+                                    }
+                                });
                                 Looper.loop();
                             }
                             else {
-                                Looper.prepare();
-                                Toast.makeText(UserActivity.this, result, Toast.LENGTH_SHORT ).show();
-                                Looper.loop();
+                                setButtonStyle(false);
+                                if(result != null && result.equals("UnknownError")) {
+                                    Looper.prepare();
+                                    Snackbar.make(v,"未知错误",Snackbar.LENGTH_SHORT).show();
+                                    Looper.loop();
+                                }
+                                else if(result != null && result.equals("Failure")) {
+                                    Looper.prepare();
+                                    Snackbar.make(v,"错误：重复的关注请求，已取消关注",Snackbar.LENGTH_SHORT).show();
+                                    Looper.loop();
+                                }
+                                else {
+                                    Looper.prepare();
+                                    Toast.makeText(UserActivity.this, result, Toast.LENGTH_SHORT ).show();
+                                    Looper.loop();
+                                }
                             }
                         }
-                    }
-                });
-            }
-            else {
-                //现在是关注状态
-                Map<String, Object> map = new HashMap<>();
-                map.put("pk", userId);
-                setButtonStyle(false);
-                HelloHttp.sendDeleteRequest("api/user/followyou", map, new okhttp3.Callback() {
-                    @Override
-                    public void onFailure(Call call, IOException e) {
-                        Log.e("UserActivity", "FAILURE");
-                        setButtonStyle(true);
-                        Looper.prepare();
-                        Snackbar.make(v,"服务器错误",Snackbar.LENGTH_SHORT).show();
-                        Looper.loop();
-                    }
-
-                    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
-                    @Override
-                    public void onResponse(Call call, Response response) throws IOException {
-                        String responseData = response.body().string();
-                        Log.d("UserActivity", responseData);
-                        String result = null;
-                        try {
-                            result = new JSONObject(responseData).getString("status");
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+                    });
+                }
+                else {
+                    //现在是关注状态
+                    Map<String, Object> map = new HashMap<>();
+                    map.put("pk", userId);
+                    setButtonStyle(false);
+                    HelloHttp.sendDeleteRequest("api/user/followyou", map, new okhttp3.Callback() {
+                        @Override
+                        public void onFailure(Call call, IOException e) {
+                            Log.e("UserActivity", "FAILURE");
                             setButtonStyle(true);
-                        }
-                        if(result != null && result.equals("Success")) {
                             Looper.prepare();
-                            Snackbar.make(v,"已取消关注",Snackbar.LENGTH_SHORT).show();
+                            Snackbar.make(v,"服务器错误",Snackbar.LENGTH_SHORT).show();
                             Looper.loop();
                         }
-                        else {
-                            setButtonStyle(true);
-                            if(result != null && result.equals("UnknownError")) {
+
+                        @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+                        @Override
+                        public void onResponse(Call call, Response response) throws IOException {
+                            String responseData = response.body().string();
+                            Log.d("UserActivity", responseData);
+                            String result = null;
+                            try {
+                                result = new JSONObject(responseData).getString("status");
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                                setButtonStyle(true);
+                            }
+                            if(result != null && result.equals("Success")) {
                                 Looper.prepare();
-                                Snackbar.make(v,"未知错误",Snackbar.LENGTH_SHORT).show();
+                                Snackbar.make(v,"已取消关注",Snackbar.LENGTH_SHORT).show();
+                                Map<String, Object> map = new HashMap<>();
+                                HelloHttp.sendGetRequest("api/user/detail/"+Integer.toString(userId), map, new okhttp3.Callback() {
+                                    @Override
+                                    public void onFailure(Call call, IOException e) {
+                                        Log.e("UserActivity", "FAILURE");
+                                        Looper.prepare();
+                                        Toast.makeText(UserActivity.this, "服务器未响应", Toast.LENGTH_SHORT).show();
+                                        Looper.loop();
+                                    }
+
+                                    @Override
+                                    public void onResponse(Call call, Response response) throws IOException {
+                                        String responseData = response.body().string();
+                                        Log.d("UserActivity", responseData);
+                                        try {
+                                            JSONObject jsonObject1 = new JSONObject(responseData);
+                                            JSONObject jsonObject = jsonObject1.getJSONObject("result");
+                                            posts = jsonObject1.getInt("post_num");
+                                            username = jsonObject.getString("username");
+                                            nickname = jsonObject.getString("nickname");
+                                            gender = jsonObject.getInt("gender");
+                                            birthday = jsonObject.getString("birthday");
+                                            follow_num = jsonObject.getInt("following_num");
+                                            concern_num = jsonObject.getInt("followed_num");
+                                            src = jsonObject.getString("profile_picture");
+                                            src = "http://ins.itstudio.club" + src;
+                                            address = jsonObject.getString("address");
+                                            introduction = jsonObject.getString("introduction");
+                                            mHandler.sendEmptyMessageDelayed(1, 0);
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                            String result = null;
+                                            try {
+                                                result = new JSONObject(responseData).getString("status");
+                                                Looper.prepare();
+                                                Toast.makeText(UserActivity.this,result, Toast.LENGTH_SHORT).show();
+                                                Looper.loop();
+                                            } catch (JSONException e1) {
+                                                e1.printStackTrace();
+                                            }
+                                        }
+                                    }
+                                });
                                 Looper.loop();
                             }
                             else {
-                                Looper.prepare();
-                                Toast.makeText(UserActivity.this, result, Toast.LENGTH_SHORT ).show();
-                                Looper.loop();
+                                setButtonStyle(true);
+                                if(result != null && result.equals("UnknownError")) {
+                                    Looper.prepare();
+                                    Snackbar.make(v,"未知错误",Snackbar.LENGTH_SHORT).show();
+                                    Looper.loop();
+                                }
+                                else {
+                                    Looper.prepare();
+                                    Toast.makeText(UserActivity.this, result, Toast.LENGTH_SHORT ).show();
+                                    Looper.loop();
+                                }
                             }
                         }
-                    }
-                });
-            }
+                    });
+                }
+
             }
         });
     }
@@ -348,6 +435,7 @@ public class UserActivity extends AppCompatActivity {
         super.onResume();
         tabLayout.getTabAt(0).select();
     }
+
     private void setDefaultFragment() {
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction transaction = fm.beginTransaction();

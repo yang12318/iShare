@@ -220,7 +220,7 @@ public class HomeHotFragment extends Fragment implements EasyPermissions.Permiss
                     public void complete() {
                         adapter.notifyDataSetChanged();
                     }
-                }, 3000);
+                }, 1000);
             }
 
             @Override

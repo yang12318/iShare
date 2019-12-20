@@ -242,7 +242,8 @@ public class AddFragment extends Fragment implements EasyPermissions.PermissionC
         String[] perms = {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA};
         if (EasyPermissions.hasPermissions(getActivity(), perms)) {
             // 拍照后照片的存放目录，改成你自己拍照后要存放照片的目录。如果不传递该参数的话就没有拍照功能
-            File takePhotoDir = new File(Environment.getExternalStorageDirectory(), "InsTakePhoto");
+            Log.e("bugTest", "bbuugg");
+            File takePhotoDir = new File(Environment.getExternalStorageDirectory(), "iShareTakePhoto");
 
             Intent photoPickerIntent = new BGAPhotoPickerActivity.IntentBuilder(getActivity())
                     .cameraFileDir(takePhotoDir) // 拍照后照片的存放目录，改成你自己拍照后要存放照片的目录。如果不传递该参数的话则不开启图库里的拍照功能

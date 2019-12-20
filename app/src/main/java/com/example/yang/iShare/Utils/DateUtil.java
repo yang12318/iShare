@@ -56,4 +56,23 @@ public class DateUtil {
         return Long.toString(time);
     }
 
+    public static long getDeltaSeconds(String str) {
+        SimpleDateFormat s_format = new SimpleDateFormat("yyyyMMddHHmmss");
+        System.out.println(str);
+        String str2 = getNowDateTime("yyyyMMddHHmmss");
+        Date old_date = null, new_date = null;
+        try {
+            old_date = s_format.parse(str);
+            new_date = s_format.parse(str2);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        long old_time = old_date.getTime();
+        long new_time = new_date.getTime();
+        long diff_time = new_time - old_time;
+        long diff_seconds = diff_time / 1000;
+        return diff_seconds;
+    }
+
 }

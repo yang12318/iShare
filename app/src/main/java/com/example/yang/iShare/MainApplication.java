@@ -12,7 +12,7 @@ public class MainApplication extends Application {
     private static Context context;
     private final static String TAG = "MainApplication";
     private static MainApplication mApp;
-    public HashMap<String, Integer> mInfoMap = new HashMap<String, Integer>();
+    public HashMap<String, String> mInfoMap = new HashMap<String, String>();
 
     public static MainApplication getInstance() {
         return mApp;

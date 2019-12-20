@@ -191,6 +191,7 @@ public class HomeMeFragment extends Fragment implements EasyPermissions.Permissi
                                 last_post_id = list.get(list.size()-1).getId();
                             }
                             else if(result.equals("null")){
+                                easyRefreshLayout.loadMoreComplete();
                                 Looper.prepare();
                                 Toast.makeText(getContext(), "没有更多数据了", Toast.LENGTH_SHORT).show();
                                 Looper.loop();
@@ -210,7 +211,7 @@ public class HomeMeFragment extends Fragment implements EasyPermissions.Permissi
                     public void complete() {
                         adapter.notifyDataSetChanged();
                     }
-                }, 3000);
+                }, 1000);
             }
 
             @Override
