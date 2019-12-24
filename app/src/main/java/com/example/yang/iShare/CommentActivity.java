@@ -265,7 +265,7 @@ public class CommentActivity extends AppCompatActivity {
                                     "作者：" +
                                     list.get(position).getCommenter() +
                                     "\n" +
-                                    "来源：Instagram";
+                                    "来源：iShare";
                             //获取剪贴板管理器：
                             ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
                             // 创建普通字符型ClipData

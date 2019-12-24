@@ -1,5 +1,6 @@
 package com.example.yang.iShare;
 
+import android.app.Activity;
 import android.os.Build;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -25,10 +26,16 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
     private SearchFragment mSearchFragment;
     private AboutFragment mAboutFragment;
     private HomeFragment mHomeFragment;
+
+    public static Activity MainActivity;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        MainActivity = MainActivity.this;
+
         /**
          * bottomNavigation 设置
          */
@@ -168,5 +175,15 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
         Fragment mMeFragement = new MeFragment();
         ft.replace(R.id.tb, mMeFragement);
         ft.commit();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        MainActivity = null;
+    }
+
+    private Activity getMyActivity() {
+        return com.example.yang.iShare.MainActivity.MainActivity;
     }
 }

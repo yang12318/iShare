@@ -219,9 +219,16 @@ public class SearchFragment extends Fragment implements EasyPermissions.Permissi
                     @Override
                     public void onFailure(Call call, IOException e) {
                         Log.e("SearchFragment", "FAILURE");
-                        Looper.prepare();
-                        Toast.makeText(getContext(), "服务器错误", Toast.LENGTH_SHORT).show();
-                        Looper.loop();
+//                        Looper.prepare();
+//                        Toast.makeText(getContext(), "服务器错误", Toast.LENGTH_SHORT).show();
+//                        Looper.loop();
+                        Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                easyRefreshLayout.closeLoadView();
+                                Toast.makeText(getContext(), "服务器错误", Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     }
 
                     @Override
@@ -230,7 +237,7 @@ public class SearchFragment extends Fragment implements EasyPermissions.Permissi
                         Log.d("SearchFragment", responseData);
                         try{
                             JSONObject jsonObject1 = new JSONObject(responseData);
-                            String result = jsonObject1.getString("status");
+                            final String result = jsonObject1.getString("status");
                             if(result.equals("Success")) {
                                 JSONArray jsonArray1 = jsonObject1.getJSONArray("result");
                                 JSONArray jsonArray2 = jsonObject1.getJSONArray("photoList");
@@ -263,16 +270,44 @@ public class SearchFragment extends Fragment implements EasyPermissions.Permissi
                                     mHandler.sendEmptyMessageDelayed(1, 0);
                                 }
                                 last_post_id = list.get(list.size()-1).getId();
+
+                                Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        easyRefreshLayout.loadMoreComplete(new EasyRefreshLayout.Event() {
+                                            @Override
+                                            public void complete() {
+                                                adapter.notifyDataSetChanged();
+                                            }
+                                        }, 1000);
+                                    }
+                                });
                             }
                             else if(result.equals("null")){
-                                Looper.prepare();
-                                Toast.makeText(getContext(), "没有更多数据了", Toast.LENGTH_SHORT).show();
-                                Looper.loop();
+//                                Looper.prepare();
+//                                Toast.makeText(getContext(), "没有更多数据了", Toast.LENGTH_SHORT).show();
+//                                Looper.loop();
+                                Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        //easyRefreshLayout.loadNothing();
+                                        easyRefreshLayout.closeLoadView();
+                                        Toast.makeText(getContext(), "没有更多数据了", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
                             }
                             else {
-                                Looper.prepare();
-                                Toast.makeText(getContext(), result, Toast.LENGTH_SHORT).show();
-                                Looper.loop();
+//                                Looper.prepare();
+//                                Toast.makeText(getContext(), result, Toast.LENGTH_SHORT).show();
+//                                Looper.loop();
+                                Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        //easyRefreshLayout.loadNothing();
+                                        easyRefreshLayout.closeLoadView();
+                                        Toast.makeText(getContext(), result, Toast.LENGTH_SHORT).show();
+                                    }
+                                });
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
